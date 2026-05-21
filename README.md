@@ -5,8 +5,8 @@ This repository configures VM5 as the controlled lab-only unauthorised-device te
 ## VM details
 
 - Hostname: `mws-lab-unauth01`
-- Static IP: `192.168.1.50/24`
-- Target broker: `192.168.1.10:1883`
+- Static IP: `192.168.1.75/24`
+- Target broker: `192.168.1.71:1883`
 
 ## Safety note
 

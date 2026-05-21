@@ -8,6 +8,7 @@ fi
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APPLY_STATIC_IP="${APPLY_STATIC_IP:-yes}"
+BROKER_HOST="192.168.1.71"
 
 if [ "$APPLY_STATIC_IP" = "yes" ]; then
   bash "$REPO_DIR/scripts/apply_static_ip.sh"
@@ -18,14 +19,21 @@ fi
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip python3-paho-mqtt mosquitto-clients netcat-openbsd
 
+ENV_FILE="/etc/mws-lab-test/lab_test.env"
+
 mkdir -p /opt/mws-lab-test /etc/mws-lab-test
 cp "$REPO_DIR/src/unauthorised_device_false_normal_test.py" /opt/mws-lab-test/unauthorised_device_false_normal_test.py
 chmod +x /opt/mws-lab-test/unauthorised_device_false_normal_test.py
 
-if [ ! -f /etc/mws-lab-test/lab_test.env ]; then
-  cp "$REPO_DIR/config/lab_test.env.example" /etc/mws-lab-test/lab_test.env
-  chmod 640 /etc/mws-lab-test/lab_test.env
+if [ ! -f "$ENV_FILE" ]; then
+  cp "$REPO_DIR/config/lab_test.env.example" "$ENV_FILE"
 fi
+if grep -q '^MQTT_BROKER_HOST=' "$ENV_FILE"; then
+  sed -i "s|^MQTT_BROKER_HOST=.*|MQTT_BROKER_HOST=$BROKER_HOST|" "$ENV_FILE"
+else
+  echo "MQTT_BROKER_HOST=$BROKER_HOST" >> "$ENV_FILE"
+fi
+chmod 640 "$ENV_FILE"
 
 echo "[DONE] VM5 lab-only unauthorised-device test setup complete."
 echo "Run controlled test with: bash scripts/run_lab_unauthorised_test.sh"

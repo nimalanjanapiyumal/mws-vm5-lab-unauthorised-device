@@ -3,7 +3,7 @@
 ## What to capture
 
 - Hostname: `mws-lab-unauth01`
-- Static IP: `192.168.1.50/24`
+- Static IP: `192.168.1.75/24`
 - Setup command: `sudo bash setup.sh`
 - Verification command: `bash verify.sh`
 - Role: Controlled local-lab test VM for blocked login, ACL-denied publish and simulated credential misuse evidence

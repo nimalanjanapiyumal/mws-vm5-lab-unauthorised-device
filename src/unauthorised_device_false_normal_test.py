@@ -22,7 +22,7 @@ def getenv(name: str, default: str) -> str:
     return os.environ.get(name, default)
 
 
-BROKER_HOST = getenv("MQTT_BROKER_HOST", "192.168.1.10")
+BROKER_HOST = getenv("MQTT_BROKER_HOST", "192.168.1.71")
 BROKER_PORT = int(getenv("MQTT_BROKER_PORT", "1883"))
 READONLY_USERNAME = getenv("READONLY_USERNAME", "lab_test")
 READONLY_PASSWORD = getenv("READONLY_PASSWORD", "ChangeMe-LabTest-2026")
